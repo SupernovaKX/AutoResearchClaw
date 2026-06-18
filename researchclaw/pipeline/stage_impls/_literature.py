@@ -392,6 +392,7 @@ def _execute_literature_collect(
         )
         papers = search_papers_multi_query(
             expanded_queries,
+            sources=("arxiv",),  # CN network: OpenAlex returns polluted data, S2 rate-limited, only arXiv is reliable
             limit_per_query=40,
             year_min=year_min,
             s2_api_key=config.llm.s2_api_key,
