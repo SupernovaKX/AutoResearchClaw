@@ -386,13 +386,13 @@ def _execute_literature_collect(
         expanded_queries = _expand_search_queries(queries, config.research.topic)
         logger.info(
             "[literature] Searching %d queries (expanded from %d) "
-            "across OpenAlex → S2 → arXiv…",
+            "across Semantic Scholar + arXiv…",
             len(expanded_queries),
             len(queries),
         )
         papers = search_papers_multi_query(
             expanded_queries,
-            sources=("arxiv",),  # CN network: OpenAlex returns polluted data, S2 rate-limited, only arXiv is reliable
+            sources=("semantic_scholar", "arxiv"),  # CN: OpenAlex polluted + DDG unreachable (kept off); S2 via authenticated key @ <=1 req/s
             limit_per_query=40,
             year_min=year_min,
             s2_api_key=config.llm.s2_api_key,
